@@ -1,127 +1,197 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>TravelSite</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Currency Converter</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Custom CSS for Dark Mode -->
+  <style>
+    .dark-mode {
+      background-color: #121212;
+      color: #ffffff;
+    }
+    .dark-mode .card {
+      background-color: #1e1e1e;
+      color: #ffffff;
+    }
+  </style>
 </head>
-<body data-bs-spy="scroll" data-bs-target=".navbar" data-bs-offset="50">
-    <nav class="navbar navbar-dark bg-dark navbar-expand-lg fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="#">TravelSite</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="#carouselExample">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#gallery">Gallery</a></li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">Destinations</a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Asia</a></li>
-                            <li><a class="dropdown-item" href="#">Europe</a></li>
-                            <li><a class="dropdown-item" href="#">America</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    
-    <div id="carouselExample" class="carousel slide mt-5" data-bs-ride="carousel">
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="https://placehold.co/1200x400?text=Mountain+Adventures" class="d-block w-100" alt="Mountain Adventures">
-            </div>
-            <div class="carousel-item">
-                <img src="https://placehold.co/1200x400?text=Beautiful+Beaches" class="d-block w-100" alt="Beautiful Beaches">
-            </div>
-            <div class="carousel-item">
-                <img src="https://placehold.co/1200x400?text=City+Lights" class="d-block w-100" alt="City Exploration">
-            </div>
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        </button>
+<body>
+  <div class="container mt-4">
+    <h1 class="text-center">Currency Converter</h1>
+    <!-- Dark Mode Toggle -->
+    <div class="form-check form-switch">
+      <input class="form-check-input" type="checkbox" id="darkModeToggle">
+      <label class="form-check-label" for="darkModeToggle">Dark Mode</label>
     </div>
-    
-    <div class="container mt-4 text-center" id="gallery">
-        <h2 class="mt-4">Gallery</h2>
-        <div class="row g-3">
-            <div class="col-md-4"><img src="https://placehold.co/350x200?text=Destination+1" class="img-fluid" alt="Destination 1"></div>
-            <div class="col-md-4"><img src="https://placehold.co/350x200?text=Destination+2" class="img-fluid" alt="Destination 2"></div>
-            <div class="col-md-4"><img src="https://placehold.co/350x200?text=Destination+3" class="img-fluid" alt="Destination 3"></div>
-            <div class="col-md-4"><img src="https://placehold.co/350x200?text=Destination+4" class="img-fluid" alt="Destination 4"></div>
-            <div class="col-md-4"><img src="https://placehold.co/350x200?text=Destination+5" class="img-fluid" alt="Destination 5"></div>
-            <div class="col-md-4"><img src="https://placehold.co/350x200?text=Destination+6" class="img-fluid" alt="Destination 6"></div>
+
+    <!-- Currency Converter -->
+    <div class="card mt-4">
+      <div class="card-body">
+        <h5 class="card-title">Currency Converter</h5>
+        <div class="row">
+          <div class="col-md-3">
+            <label for="amount">Amount</label>
+            <input type="number" id="amount" class="form-control" placeholder="Enter amount">
+          </div>
+          <div class="col-md-3">
+            <label for="baseCurrency">Base Currency</label>
+            <select id="baseCurrency" class="form-control"></select>
+          </div>
+          <div class="col-md-3">
+            <label for="targetCurrency">Target Currency</label>
+            <select id="targetCurrency" class="form-control"></select>
+          </div>
+          <div class="col-md-3">
+            <button class="btn btn-primary mt-4" onclick="convertCurrency()">Convert</button>
+          </div>
         </div>
-    </div>
-    
-    <div class="container mt-5" id="faq">
-        <h2>FAQs</h2>
-        <div class="accordion" id="faqAccordion">
-            <div class="accordion-item">
-                <h2 class="accordion-header">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">What is the best time to travel?</button>
-                </h2>
-                <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
-                    <div class="accordion-body">The best time to travel depends on your destination, but generally, spring and fall offer pleasant weather and fewer crowds.</div>
-                </div>
-            </div>
-            <div class="accordion-item">
-                <h2 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">Are there group discounts?</button>
-                </h2>
-                <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                    <div class="accordion-body">Yes, we offer group discounts for bookings of 5 or more people.</div>
-                </div>
-            </div>
+        <div class="row mt-3">
+          <div class="col-md-12">
+            <h5>Result: <span id="result"></span></h5>
+          </div>
         </div>
+      </div>
     </div>
-    
-    <div class="container mt-5 text-center mb-5" id="contact">
-        <h2>Contact Us</h2>
-        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#bookingModal">Book Now</button>
-    </div>
-    
-    <div class="modal fade" id="bookingModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Booking Form</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="mb-3">
-                            <label class="form-label">Name</label>
-                            <input type="text" class="form-control">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Email</label>
-                            <input type="email" class="form-control">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Destination</label>
-                            <select class="form-control">
-                                <option>Choose...</option>
-                                <option>Asia</option>
-                                <option>Europe</option>
-                                <option>America</option>
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-success">Submit</button>
-                    </form>
-                </div>
-            </div>
+
+    <!-- Historical Exchange Rates -->
+    <div class="card mt-4">
+      <div class="card-body">
+        <h5 class="card-title">Historical Exchange Rates</h5>
+        <div class="row">
+          <div class="col-md-3">
+            <label for="startDate">Start Date</label>
+            <input type="date" id="startDate" class="form-control">
+          </div>
+          <div class="col-md-3">
+            <label for="endDate">End Date</label>
+            <input type="date" id="endDate" class="form-control">
+          </div>
+          <div class="col-md-3">
+            <button class="btn btn-primary mt-4" onclick="fetchHistoricalData()">Fetch Rates</button>
+          </div>
         </div>
+        <div class="row mt-3">
+          <div class="col-md-12">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Exchange Rate</th>
+                </tr>
+              </thead>
+              <tbody id="historicalRatesTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
+
+    <!-- Bar Chart Visualization -->
+    <div class="card mt-4">
+      <div class="card-body">
+        <h5 class="card-title">Exchange Rate Trends</h5>
+        <canvas id="exchangeRateChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Fetch currencies and populate dropdowns
+    async function fetchCurrencies() {
+      const response = await fetch('https://api.frankfurter.app/currencies');
+      const data = await response.json();
+      const baseCurrency = document.getElementById('baseCurrency');
+      const targetCurrency = document.getElementById('targetCurrency');
+
+      for (const [code, name] of Object.entries(data)) {
+        const option1 = document.createElement('option');
+        option1.value = code;
+        option1.text = ${code} - ${name};  // Corrected string interpolation
+        baseCurrency.appendChild(option1);
+
+        const option2 = document.createElement('option');
+        option2.value = code;
+        option2.text = ${code} - ${name};  // Corrected string interpolation
+        targetCurrency.appendChild(option2);
+      }
+    }
+
+    // Convert currency
+    async function convertCurrency() {
+      const amount = document.getElementById('amount').value;
+      const baseCurrency = document.getElementById('baseCurrency').value;
+      const targetCurrency = document.getElementById('targetCurrency').value;
+
+      const response = await fetch(https://api.frankfurter.app/latest?amount=${amount}&from=${baseCurrency}&to=${targetCurrency});
+      const data = await response.json();
+      document.getElementById('result').innerText = ${amount} ${baseCurrency} = ${data.rates[targetCurrency]} ${targetCurrency};  // Corrected string interpolation
+    }
+
+    // Fetch historical data
+    async function fetchHistoricalData() {
+      const startDate = document.getElementById('startDate').value;
+      const endDate = document.getElementById('endDate').value;
+      const baseCurrency = document.getElementById('baseCurrency').value;
+      const targetCurrency = document.getElementById('targetCurrency').value;
+
+      const response = await fetch(https://api.frankfurter.app/${startDate}..${endDate}?from=${baseCurrency}&to=${targetCurrency});
+      const data = await response.json();
+      const ratesTable = document.getElementById('historicalRatesTable');
+      ratesTable.innerHTML = '';
+
+      for (const [date, rate] of Object.entries(data.rates)) {
+        const row = document.createElement('tr');
+        row.innerHTML = <td>${date}</td><td>${rate[targetCurrency]}</td>;  // Corrected HTML syntax
+        ratesTable.appendChild(row);
+      }
+
+      // Generate chart
+      generateChart(data);
+    }
+
+    // Generate bar chart
+    function generateChart(data) {
+      const dates = Object.keys(data.rates);
+      const rates = dates.map(date => data.rates[date][document.getElementById('targetCurrency').value]);
+
+      const ctx = document.getElementById('exchangeRateChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: dates,
+          datasets: [{
+            label: 'Exchange Rate',
+            data: rates,
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    }
+
+    // Dark Mode Toggle
+    document.getElementById('darkModeToggle').addEventListener('change', function() {
+      document.body.classList.toggle('dark-mode');
+    });
+
+    // Initialize
+    fetchCurrencies();
+  </script>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
